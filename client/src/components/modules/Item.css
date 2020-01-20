@@ -1,0 +1,50 @@
+.item-container {
+    display: flex;
+    width: 100;
+}
+
+.content-box {
+    flex-basis: 97%;
+}
+.vote-container {
+    flex-basis: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-right: 40px;
+}
+
+.vote-container > button {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+#vote-count {
+    text-align: center;
+    display: block;
+}
+
+#upvote,
+#downvote {
+    font-size: 20px;
+    text-align: center;
+}
+
+#upvote:hover {
+    color: green;
+}
+
+#downvote:hover {
+    color: red;
+}
+
+#content-text {
+    margin-bottom: var(--s);
+}
+
+#content-author {
+    margin-top: var(--s);
+    font-style: italic;
+}

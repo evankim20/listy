@@ -1,0 +1,19 @@
+.submit-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+
+.submit-container input {
+    /* flex-grow: 1; */
+    flex-basis: 85%;
+}
+
+.submit-container button {
+    flex-basis: 15%;
+}
+
+ul {
+    list-style-type: none;
+}
