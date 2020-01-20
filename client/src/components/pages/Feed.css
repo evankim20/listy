@@ -9,7 +9,7 @@
     /* flex-grow: 1; */
     flex-basis: 85%;
 }
-
+ 
 .submit-container button {
     flex-basis: 15%;
 }

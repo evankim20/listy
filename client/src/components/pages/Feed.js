@@ -27,7 +27,7 @@ class Feed extends Component {
       list: newList,
       inputText: ""
     });
-  };
+  }; 
 
   componentDidMount() {
     // remember -- api calls go here!

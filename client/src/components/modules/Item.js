@@ -29,7 +29,7 @@ class Item extends Component {
             <button id="upvote"><FontAwesomeIcon icon={faChevronUp} /></button>
             <span id="vote-count">2</span>
             <button id="downvote"><FontAwesomeIcon icon={faChevronDown} /></button>
-        </div>
+        </div> 
     </li>
     );
   }
