@@ -32,8 +32,6 @@ const auth = require("./auth");
 const socket = require("./server-socket");
 
 // Server configuration below
-// TODO:
-const mongoConnectionURL = "";
 const databaseName = "listy";
 
 // connect to mongodb

@@ -3,15 +3,25 @@ import Item from "../modules/Item.js";
 // import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "./Feed.css";
+import { post } from "../../utilities.js";
+import { get } from "../../utilities";
+
 
 class Feed extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
     this.state = {
-        list: ["some content"],
+        items: [],
         inputText: ""
       };
+  }
+
+  componentDidMount() {
+    get("/api/items", { groupId: "1" }).then(data => {
+        data.sort((a,b) => (b.likedBy.length - b.dislikedBy.length) - (a.likedBy.length - a.dislikedBy.length));
+        this.setState({items: data});
+    });
   }
 
   handleInputChange = (event) => {
@@ -21,35 +31,31 @@ class Feed extends Component {
   };
 
   addItem = () => {
-    const { list, inputText } = this.state;
-    const newList = list.concat([inputText]);
-    this.setState({
-      list: newList,
-      inputText: ""
-    });
+    const { items, inputText } = this.state;
+    if (inputText.length !== 0) {
+        const body = {content: inputText};
+        post("/api/item", body).then(item => {
+            const newItems = items.concat([item]);
+            this.setState({
+              items: newItems,
+              inputText: ""
+            });
+        })
+    }
   }; 
 
-  componentDidMount() {
-    // remember -- api calls go here!
-    // get list for group
-  }
-
   render() {
-    // this.state.list.map((item, index) => { 
-    //     console.log(item + index);
-    // })
+      //TODO: groupname and ativiation code hardcoded
     return (
-        // USER IS HARD CODED
       <>
-        <h1>Group Name Here</h1>
+        <h1>Silicon Valley Group</h1>
         <p>Activation Code: helloworld</p>
         <hr />
         <ul>
-            {this.state.list.map((item, index) => (
+            {this.state.items.map((item, index) => (
                 <Item
                     key={`item-${index}`}
-                    content={item}
-                    user={"Bighead"}
+                    item={item}
                 />
             ))}
         </ul>

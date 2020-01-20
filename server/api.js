@@ -11,6 +11,8 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Group = require("./models/group");
+const Item = require("./models/item");
 
 // import authentication library
 const auth = require("./auth");
@@ -38,9 +40,44 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
-// |------------------------------|
-// | write your API methods below!|
-// |------------------------------|
+// post an item to a list
+// TODO: groupId hard coded, sender info hard coded
+router.post("/item", (req, res) => {
+  const newItem = new Item({
+    sender: {
+      _id: "6969696",
+      name: "Bighead",
+    },
+    groupId: "1",
+    content: req.body.content,
+    likedBy: [],
+    dislikedBy: [],
+  });
+  newItem.save().then((item) => res.send(item));
+});
+
+// get all items from a group
+router.get("/items", (req, res) => {
+  Item.find({ groupId: req.query.groupId }).then((allItems) => {
+    res.send(allItems);
+  });
+});
+
+// update like for a specific post
+router.post("/like", (req, res) => {
+  Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
+    item.likedBy = item.likedBy.concat([req.body.userId]);
+    item.save();
+  })
+});
+
+// update dislikes for a specific post
+router.post("/dislike", (req, res) => {
+  Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
+    item.dislikedBy = item.dislikedBy.concat([req.body.userId]);
+    item.save();
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

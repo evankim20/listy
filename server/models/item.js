@@ -5,7 +5,6 @@ const ItemSchema = new mongoose.Schema({
       _id: String,
       name: String,
   },
-  id: String,
   groupId: String,
   content: String,
   likedBy: [String],
