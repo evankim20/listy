@@ -32,6 +32,11 @@
     text-align: center;
 }
 
+#upvote:hover,
+#downvote:hover {
+    background-color: var(--darkgrey);
+}
+
 #upvote:hover {
     color: green;
 }

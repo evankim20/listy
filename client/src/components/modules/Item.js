@@ -16,6 +16,21 @@ import "./Item.css";
 class Item extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+        voteCount: 0,
+    };
+  }
+
+  upVote = () => {
+    this.setState((prevState) => {
+        return {voteCount: prevState.voteCount + 1}
+    })
+  }
+
+  downVote = () => {
+    this.setState((prevState) => {
+        return {voteCount: prevState.voteCount - 1}
+    })
   }
 
   render() {
@@ -26,9 +41,9 @@ class Item extends Component {
             <p id="content-author">By: {this.props.user}</p>
         </div>
         <div className="vote-container">
-            <button id="upvote"><FontAwesomeIcon icon={faChevronUp} /></button>
-            <span id="vote-count">2</span>
-            <button id="downvote"><FontAwesomeIcon icon={faChevronDown} /></button>
+            <button id="upvote" onClick={this.upVote}><FontAwesomeIcon icon={faChevronUp} /></button>
+            <span id="vote-count">{this.state.voteCount}</span>
+            <button id="downvote" onClick={this.downVote}><FontAwesomeIcon icon={faChevronDown} /></button>
         </div> 
     </li>
     );
