@@ -1,0 +1,12 @@
+.Navbar-container {
+  position: fixed;
+  /* padding: var(--s) var(--m); */
+  background-color: var(--primary);
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.topnav-right {
+    text-align: left;
+}

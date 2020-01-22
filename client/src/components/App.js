@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Feed from "./pages/Feed.js";
-import Skeleton from "./pages/Skeleton.js";
+import Start from "./pages/Start.js";
+import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
 
@@ -23,12 +24,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // get("/api/whoami").then((user) => {
-    //   if (user._id) {
-    //     // they are registed in the database, and currently logged in.
-    //     this.setState({ userId: user._id });
-    //   }
-    // }); 
+    get("/api/whoami").then((user) => {
+      if (user._id) {
+        // they are registed in the database, and currently logged in.
+        this.setState({ userId: user._id });
+      }
+    });
   }
 
   handleLogin = (res) => {
@@ -41,17 +42,30 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined });
+    this.setState({ userId: null });
     post("/api/logout");
   };
 
   render() {
     return (
       <>
+        <Navbar
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          userId={this.state.userId}
+        />
         <Router>
-          <Feed
-            path="/"
-          />
+          {this.state.userId ? (
+            <Redirect from="/" to="/feed" />
+          ) : (
+            <Start
+              path="/"
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+              userId={this.state.userId}
+            />
+          )}
+          <Feed path="/feed" />
           <NotFound default />
         </Router>
       </>
@@ -61,9 +75,19 @@ class App extends Component {
 
 export default App;
 
-{/* <Feed
+{
+  /* <Feed
 path="/"
 handleLogin={this.handleLogin}
 handleLogout={this.handleLogout}
 userId={this.state.userId}
-/> */}
+/> */
+}
+
+{
+  /* <Navbar
+handleLogin={this.handleLogin}
+handleLogout={this.handleLogout}
+userId={this.state.userId}
+/> */
+}

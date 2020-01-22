@@ -47,7 +47,7 @@ class Feed extends Component {
   render() {
       //TODO: groupname and ativiation code hardcoded
     return (
-      <>
+      <div className="feed-container">
         <h1>Silicon Valley Group</h1>
         <p>Activation Code: helloworld</p>
         <hr />
@@ -67,7 +67,7 @@ class Feed extends Component {
             />
             <button onClick={this.addItem}>SUBMIT</button>
         </div>
-      </>
+      </div>
     );
   }
 }

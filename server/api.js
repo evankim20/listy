@@ -43,14 +43,15 @@ router.post("/initsocket", (req, res) => {
 // post an item to a list
 // TODO: groupId hard coded, sender info hard coded
 router.post("/item", (req, res) => {
+  console.log(req.user);
   const newItem = new Item({
     sender: {
-      _id: "6969696",
-      name: "Bighead",
+      _id: req.user._id,
+      name: req.user.name,
     },
     groupId: "1",
     content: req.body.content,
-    likedBy: [],
+    likedBy: [req.user._id],
     dislikedBy: [],
   });
   newItem.save().then((item) => res.send(item));
@@ -66,7 +67,7 @@ router.get("/items", (req, res) => {
 // update like for a specific post
 router.post("/like", (req, res) => {
   Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
-    item.likedBy = item.likedBy.concat([req.body.userId]);
+    item.likedBy = item.likedBy.concat([req.user._id]);
     item.save();
   })
 });
@@ -74,10 +75,13 @@ router.post("/like", (req, res) => {
 // update dislikes for a specific post
 router.post("/dislike", (req, res) => {
   Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
-    item.dislikedBy = item.dislikedBy.concat([req.body.userId]);
+    item.dislikedBy = item.dislikedBy.concat([req.user._id]);
     item.save();
   });
 });
+
+router.post("/login", auth.login);
+router.post("/logout", auth.logout);
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
