@@ -4,7 +4,6 @@ const socket = require("./server-socket");
 
 // create a new OAuth client used to verify google sign-in
 require("dotenv").config();
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(CLIENT_ID);
 
 // accepts a login token from the frontend, and verifies that it's legit

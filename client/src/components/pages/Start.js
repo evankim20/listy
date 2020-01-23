@@ -5,7 +5,6 @@ import "../../utilities.css";
 import "./Start.css";
 
 require("dotenv").config();
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 class Start extends Component {
   constructor(props) {

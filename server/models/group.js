@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const GroupSchema = new mongoose.Schema({
-  id: String,
   groupName: String,
   activiationCode: String,
   creatorId: String,

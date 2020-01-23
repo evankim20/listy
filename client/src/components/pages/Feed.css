@@ -1,5 +1,15 @@
-.feed-container {
-    margin-top: 50px;
+/* .feed-container {
+    margin-top: 100px;
+} */
+
+.header-container {
+    padding-top: 100px;
+    background-color: var(--darkgrey);
+    padding-bottom: 2px;
+}
+
+.feed-container > hr {
+    margin: 0;
 }
 .submit-container {
     position: fixed;
@@ -19,4 +29,9 @@
 
 ul {
     list-style-type: none;
+}
+
+#title {
+    margin: 0;
+    padding-top: var(--l);
 }

@@ -4,8 +4,6 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "./Navbar.css";
 // This identifies your web application to Google's authentication service
-require("dotenv").config();
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 /**
  * The navigation bar at the top of all pages. Takes no props.
@@ -18,20 +16,26 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="Navbar-container">
-        {/* <div className="NavBar-title u-inlineBlock">Catbook</div> */}
-        <p className="topnav-right">listy</p>
-        {/* <div className="NavBar-linkContainer u-inlineBlock">
-          {this.props.userId ? (
+        <div id="nav-title" className="u-inlineBlock">listy</div>
+        <div className="login-container u-inlineBlock">
+        {this.props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Logout"
               onLogoutSuccess={this.props.handleLogout}
               onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
+              className="NavBar-login"
             />
-          ) : ( <></>
+          ) : (
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Sign in with Google"
+              onSuccess={this.props.handleLogin}
+              onFailure={(err) => console.log(err)}
+              className="NavBar-login"
+            />
           )}
-        </div> */}
+          </div>
       </nav>
     );
   }

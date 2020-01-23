@@ -43,7 +43,6 @@ router.post("/initsocket", (req, res) => {
 // post an item to a list
 // TODO: groupId hard coded, sender info hard coded
 router.post("/item", (req, res) => {
-  console.log(req.user);
   const newItem = new Item({
     sender: {
       _id: req.user._id,
@@ -80,9 +79,28 @@ router.post("/dislike", (req, res) => {
   });
 });
 
-router.post("/login", auth.login);
-router.post("/logout", auth.logout);
+// create a new group
+router.post("/group", (req, res) => {
+  const newGroup = new Group({
+    groupName: req.body.name,
+    activiationCode: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+    creatorId: req.user._id,
+    items: 0,
+    users: [req.user._id],
+  });
+  newGroup.save().then(group => {
+    User.findOne({ _id: req.user._id }).then((user) => {
+      user.groups = user.groups.concat([group._id]);
+      user.save();
+    });
+    res.send(group);
+  });
+});
 
+// get all groups user is in
+router.get("/group", (req, res) => {
+  
+})
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

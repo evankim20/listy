@@ -1,12 +1,21 @@
 .Navbar-container {
-  position: fixed;
-  /* padding: var(--s) var(--m); */
+   /* padding: var(--s) var(--m); */
   background-color: var(--primary);
   top: 0;
   width: 100%;
   overflow: hidden;
+  position: fixed;
 }
 
-.topnav-right {
-    text-align: left;
+#nav-title {
+    margin: 20px 0px 20px 65px;
+    color: var(--white);
+    font-size: 20px;
+    height: 100%;
+}
+
+.login-container {
+    float: right;
+    margin: 10px 10px 10px 0px;
+
 }

@@ -23,8 +23,8 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    get("/api/whoami").then((user) => {
+  async componentDidMount() {
+    await get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         this.setState({ userId: user._id });
@@ -32,7 +32,7 @@ class App extends Component {
     });
   }
 
-  handleLogin = (res) => {
+  handleLogin = async (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
@@ -42,30 +42,24 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ userId: null });
+    this.setState({ userId: undefined });
     post("/api/logout");
   };
+
 
   render() {
     return (
       <>
-        <Navbar
+      <Navbar
           handleLogin={this.handleLogin}
           handleLogout={this.handleLogout}
           userId={this.state.userId}
         />
         <Router>
-          {this.state.userId ? (
-            <Redirect from="/" to="/feed" />
-          ) : (
-            <Start
-              path="/"
-              handleLogin={this.handleLogin}
-              handleLogout={this.handleLogout}
-              userId={this.state.userId}
-            />
-          )}
-          <Feed path="/feed" />
+          {/* <Start path="/" handleLogin={this.handleLogin} userId={this.state.userId} /> */}
+          {/* <Feed path="/" userId={this.state.userId} handleLogout={this.handleLogout} /> */}
+          {/* <Feed path="/" userId={this.state.userId} /> */}
+          <Feed path="/:groupId" userId={this.state.userId} />
           <NotFound default />
         </Router>
       </>
