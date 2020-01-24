@@ -45,6 +45,19 @@
     color: red;
 }
 
+.upvote-selected {
+    color: green;
+}
+
+.downvote-selected {
+    color: red;
+}
+
+.upvote-selected:hover,
+.downvote-selected:hover {
+    color: black;
+}
+
 #content-text {
     margin-bottom: var(--s);
 }
@@ -53,3 +66,4 @@
     margin-top: var(--s);
     font-style: italic;
 }
+

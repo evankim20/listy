@@ -48,7 +48,7 @@ router.post("/item", (req, res) => {
       _id: req.user._id,
       name: req.user.name,
     },
-    groupId: "1",
+    groupId: req.body.groupId,
     content: req.body.content,
     likedBy: [req.user._id],
     dislikedBy: [],
@@ -71,12 +71,28 @@ router.post("/like", (req, res) => {
   })
 });
 
+// remove like by user for a specific post
+router.post("/removelike", (req, res) => {
+  Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
+    item.likedBy.remove(req.user._id);
+    item.save();
+  })
+});
+
 // update dislikes for a specific post
 router.post("/dislike", (req, res) => {
   Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
     item.dislikedBy = item.dislikedBy.concat([req.user._id]);
     item.save();
   });
+});
+
+// remove dislike by user for a specific post
+router.post("/removedislike", (req, res) => {
+  Item.findOne({ groupId: req.body.groupId, _id: req.body._id }).then((item) => {
+    item.dislikedBy.remove(req.user._id);
+    item.save();
+  })
 });
 
 // create a new group
@@ -97,10 +113,22 @@ router.post("/group", (req, res) => {
   });
 });
 
-// get all groups user is in
+// TODO: test these
+// get group information
 router.get("/group", (req, res) => {
-  
+  Group.findOne({ _id: req.query.groupId }).then((group) => {
+    res.send(group);
+  });
 })
+
+// get all groups user is in
+router.get("/user/groups", (req, res) => {
+  Group.find({ users: req.user._id}).then((groups) => {
+    res.send(groups);
+  })
+})
+
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
