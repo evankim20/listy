@@ -1,1 +1,36 @@
 /* Fill me in :) */
+#start-container {
+    text-align: center;
+    height: 100%;
+}
+
+.start-content-container {
+    display: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    /* padding: 100px; */
+}
+
+#start-title {
+    margin: 0;
+    top: 50%;
+    font-size: 100px;
+    color: var(--primary);
+}
+
+#title-list-container {
+    padding: 0px;
+}
+
+.title-list-item {
+    color: var(--grey--main);
+    font-size: 24px;
+}
+
+#start-loginbtn {
+    width: 100%;
+    margin: auto;
+}

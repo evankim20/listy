@@ -19,3 +19,19 @@
     margin: 10px 10px 10px 0px;
 
 }
+
+.nav-link,
+.nav-link:visited {
+    margin-left: var(--m);
+    color: var(--white);
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+.nav-link + .nav-link {
+    margin-right: var(--l);
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}

@@ -4,8 +4,8 @@
 
 .header-container {
     padding-top: 100px;
-    background-color: var(--darkgrey);
     padding-bottom: 2px;
+    padding-left: 20px;
 }
 
 .feed-container > hr {
@@ -25,17 +25,124 @@
  
 .submit-container button {
     flex-basis: 15%;
+    background-color: var(--background--main);
+	border-radius:20px;
+	border:1px solid white;
+	display:inline-block;
+	cursor:pointer;
+	color: black;
+    font-family: "Raleway", sans-serif;
+	font-size:17px;
+	/* padding:16px 31px; */
+	text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+    height: 30px;
+    text-align: center;
 }
 
 ul {
     list-style-type: none;
+    padding: 0px 20px;
 }
 
 #title {
     margin: 0;
     padding-top: var(--l);
+    color: var(--primary);
+    font-size: 50px;
 }
 
-p {
-    margin-top: 100px;
+#invite-code {
+    margin-bottom: 0;
+    margin-top: 0;
+    color: var(--grey--main);
+}
+
+.feed-centered {
+    /* text-align: center;
+    vertical-align: middle; */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.feed-alert-text {
+    flex-basis: 50%;
+    font-size: 50px;
+    margin-bottom: var(--s);
+}
+
+.feed-alert-text + .feed-alert-text {
+    margin-top: 0;
+    margin-bottom: var(--l);
+}
+
+.feed-list-inst {
+    margin-bottom: var(--s);
+    font-size: 25px;
+    margin-top: 0;
+}
+
+.valid-feed-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.empty-header-container {
+    padding-top: 100px;
+    /* height: 100px; */
+    
+}
+
+.empty-header-container p,
+.empty-header-container #title {
+    padding-bottom: 2px;
+    padding-left: 20px;
+}
+
+.empty-header-container p {
+    margin-bottom: 0;
+    margin-top: 0;
+    color: var(--grey--main);
+}
+
+.empty-feed-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.smaller-alert-text {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: var(--s);
+    margin-top: var(--s);
+}
+
+.text-input {
+    height: 30px;
+    border-radius: 10px;
+    border: 2xp solid #aaa;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+}
+
+.text-input:focus {
+    border-color:dodgerBlue;
+    box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.submit-container button:hover {
+    background-color: white;
+}
+
+.submit-container button:active {
+    position: relative;
+    top: 1px;
 }

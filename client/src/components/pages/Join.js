@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-// import "./Create.css";
+import "./Create.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { get, post } from "../../utilities.js";
 
 
@@ -29,7 +31,7 @@ class Join extends Component {
     });
   };
 
-  createGroup = () => {
+  joinGroup = () => {
     post("/api/join", { activationCode: this.state.inputText}).then((group) => {
       console.log(group);
       this.setState({
@@ -45,11 +47,13 @@ class Join extends Component {
       let header;
       if (this.state.failed) {
         header = ( <div>
-            <p>That activationCode doesn't exist</p>
+            <span className="failed-alert">That activationCode doesn't exist</span>
         </div>);
     }
     if (!this.props.userId) {
-      return <div><p>You need to sign in</p>
+      return <><Link to="/feed/landing" className="return-link"><FontAwesomeIcon icon={faArrowLeft} /> Back</Link>
+      <div className="create-container">
+      <p className="feed-alert-text">You must login in order to join a group</p>
           <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Sign in with Google"
@@ -57,18 +61,43 @@ class Join extends Component {
               onFailure={(err) => console.log(err)}
               className="NavBar-login"
             />
-      </div>;
+      </div>
+      </>;
     } else {
       return (
-        <div className="create-container">
-          <Link to="/feed/landing">GO BACK</Link>
-          <input type="text" value={this.state.inputText} onChange={this.handleInputChange} />
-          <button onClick={this.createGroup}>SUBMIT</button>
+        <>
+          <Link to="/feed/landing" className="return-link"><FontAwesomeIcon icon={faArrowLeft} /> Back</Link>
+          <div className="create-container">
+            <div className="new-information">
+            <h1 className="u-headerFont">Join a Group</h1>
+            <p>Get a shared code from an existing memebr of the group you are trying to join</p>
+            </div>
+            <div className="create-input-container">
+            <input className="input-bottomborder" type="text" placeholder="Shared code here" value={this.state.inputText} onChange={this.handleInputChange} />
+          <br />
+          <button onClick={this.joinGroup}>Send <FontAwesomeIcon icon={faArrowRight} /></button>
+          <br />
           {header}
+          </div>
         </div>
+        </>
       );
     }
   }
 }
+
+{/* <div className="create-container">
+            <div className="new-information">
+            <h1 className="u-headerFont">Create a Group</h1>
+            <p>A group provides a space for a shared list.</p>  
+            <p>Your group's unique sharing code will be created after creation</p>
+            </div>
+            <div className="create-input-container">
+          <input className="input-bottomborder" type="text" placeholder="Group name here" value={this.state.inputText} onChange={this.handleInputChange} />
+          <br/>
+          <button onClick={this.createGroup}>Send <FontAwesomeIcon icon={faArrowRight} /></button>
+          </div>
+        </div> */}
+
 
 export default Join;

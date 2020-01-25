@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Link, navigate } from "@reach/router";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
-// import "./Create.css";
-import { get, post } from "../../utilities.js";
+import GoogleLogin from "react-google-login";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import "./Create.css";
+import { post } from "../../utilities.js";
 
 
 
@@ -19,6 +22,7 @@ class Create extends Component {
     // Initialize Default State
     this.state = {
       inputText: "",
+      failMessage: "",
     };
   }
 
@@ -29,18 +33,29 @@ class Create extends Component {
   };
 
   createGroup = () => {
-    post("/api/create", { name: this.state.inputText }).then((group) => {
-      console.log(group);
-      this.setState({
-        inputText: "",
+    const groupNameLength = this.state.inputText.length;
+    if (groupNameLength > 30) {
+      this.setState({ failMessage: "Group name must be under 30 characters long", inputText: "",})
+    } else if (groupNameLength === 0) {
+      this.setState({ failMessage: "Group name must not be empty"})
+    } else {
+      post("/api/create", { name: this.state.inputText }).then((group) => {
+        console.log(group);
+        this.setState({
+          inputText: "",
+          failMessage: "",
+        });
+        navigate(`/feed/${group._id}`);
       });
-      navigate(`/feed/${group._id}`);
-    });
+    }
   };
 
   render() {
+    let header = <span className="failed-alert">{this.state.failMessage}</span>
     if (!this.props.userId) {
-      return <div><p>You need to sign in</p>
+      return <><Link to="/feed/landing" className="return-link"><FontAwesomeIcon icon={faArrowLeft} /> Back</Link>
+      <div className="create-container">
+      <p className="feed-alert-text">You must login in order to create a group</p>
           <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Sign in with Google"
@@ -48,14 +63,26 @@ class Create extends Component {
               onFailure={(err) => console.log(err)}
               className="NavBar-login"
             />
-      </div>;
+      </div>
+      </>;
     } else {
       return (
-        <div className="create-container">
-          <Link to="/feed/landing">GO BACK</Link>
-          <input type="text" value={this.state.inputText} onChange={this.handleInputChange} />
-          <button onClick={this.createGroup}>SUBMIT</button>
+        <>
+          <Link to="/feed/landing" className="return-link"><FontAwesomeIcon icon={faArrowLeft} /> Back</Link>
+          <div className="create-container">
+            <div className="new-information">
+            <h1 className="u-headerFont">Create a Group</h1>
+            <p>A group provides a space for a shared list.</p>  
+            <p>Your group's unique sharing code will be created after creation</p>
+            </div>
+            <div className="create-input-container">
+          <input className="input-bottomborder" type="text" placeholder="Group name here" value={this.state.inputText} onChange={this.handleInputChange} />
+          <br/>
+          <button onClick={this.createGroup}>Send <FontAwesomeIcon icon={faArrowRight} /></button>
+          <br /> {header}
+          </div>
         </div>
+        </>
       );
     }
   }

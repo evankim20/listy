@@ -65,5 +65,7 @@
 #content-author {
     margin-top: var(--s);
     font-style: italic;
+    font-size: medium;
+    color: var(--grey--main);
 }
 
