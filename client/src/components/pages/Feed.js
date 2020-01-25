@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import Item from "../modules/Item.js";
 import Sidebar from "../modules/Sidebar.js";
 import Navbar from "../modules/Navbar.js";
-// import GoogleLogin, { GoogleLogout } from "react-google-login";
+
 import "./Feed.css";
-import { post } from "../../utilities.js";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities.js";
 
 
 class Feed extends Component {
@@ -18,26 +17,35 @@ class Feed extends Component {
       groupId: "",
       groupName: "",
       users: [],
+      activationCode: "",
+      landingPage: false,
     };
   }
 
   componentDidMount() {
     // TODO: PARSE LOCATION ID
-    const currGroup = this.props.location.pathname.slice(1);
-    console.log(currGroup);
-    get("/api/items", { groupId: currGroup }).then((data) => {
-      data.sort(
-        (a, b) => (b.likedBy.length - b.dislikedBy.length) - (a.likedBy.length - a.dislikedBy.length)
-      );
-      this.setState({ items: data, groupId: currGroup });
-    });
-
-    get("api/group", { groupId: currGroup }).then((data) => {
-      this.setState({
-        groupName: data.groupName,
-        users: data.users,
+    const currentPath = this.props.location.pathname;
+    const currGroup = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+    if (currGroup !== "landing") {
+      console.log(currGroup);
+      get("/api/items", { groupId: currGroup }).then((data) => {
+        data.sort(
+          (a, b) => (b.likedBy.length - b.dislikedBy.length) - (a.likedBy.length - a.dislikedBy.length)
+        );
+        this.setState({ items: data, groupId: currGroup, landingPage: false });
       });
-    });
+  
+      get("/api/group", { groupId: currGroup }).then((data) => {
+        this.setState({
+          groupName: data.groupName,
+          users: data.users,
+          activationCode: data.activationCode,
+        });
+      });
+    } else {
+      this.setState({landingPage: true});
+    }
+    
   }
 
   handleInputChange = (event) => {
@@ -68,6 +76,10 @@ class Feed extends Component {
         <p>User not signed in</p>
       </div>);
     }
+    // LANDING PAGE
+    else if (this.state.landingPage) {
+      content = <div><p>Landing Page</p></div>;
+    }
     // THIS GROUP DOESNT EXIST --> couldn't get the groupName prop from API call
     else if (this.state.groupName === "") {
       content = (<div>
@@ -88,12 +100,11 @@ class Feed extends Component {
     }
     // USER HAS ACCESS AND POSTS ARE AVAILABLE
     else {
-      //TODO: groupname and activiation code hardcoded
       content = (
         <div>
           <div className="header-container">
             <h1 id="title">{this.state.groupName}</h1>
-            <p>Activation Code: helloworld</p>
+            <p>Invite Code: {this.state.activationCode}</p>
           </div>
           <hr />
           <ul>
@@ -114,9 +125,15 @@ class Feed extends Component {
     }
 
     return (
+      <div>      <Navbar
+      handleLogin={this.props.handleLogin}
+      handleLogout={this.props.handleLogout}
+      userId={this.props.userId}
+    />
       <div className="feed-container">
-          <Sidebar userId={this.props.userId} word="HELLO" />
+          <Sidebar userId={this.props.userId} />
           {content}
+      </div>
       </div>
 
     )

@@ -16,9 +16,13 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="Navbar-container">
-        <div id="nav-title" className="u-inlineBlock">listy</div>
+        <div id="nav-title" className="u-inlineBlock">
+          listy
+        </div>
         <div className="login-container u-inlineBlock">
-        {this.props.userId ? (
+          <Link to="/join" >Join Group</Link>
+          <Link to="/create" >Create Group</Link>
+          {this.props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Logout"
@@ -35,7 +39,7 @@ class Navbar extends Component {
               className="NavBar-login"
             />
           )}
-          </div>
+        </div>
       </nav>
     );
   }

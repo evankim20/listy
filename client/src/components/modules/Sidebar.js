@@ -14,8 +14,7 @@ class Sidebar extends Component {
     constructor(props){
         super(props);
         this.state = {
-            groups: [{_id:"1", users:['hi','yo'], groupName: 'OneGroup', activationCode:"fomo", creatorID: "@22", items: 0, timestamp: "200"},
-            {_id:"2", users:['hi','yo'], groupName: 'TwoGroup', activationCode:"fomo", creatorID: "@22", items: 0, timestamp: "200"}],
+            groups: [],
         }
     }
 
@@ -47,24 +46,29 @@ class Sidebar extends Component {
       }
   }
 
-//   newGroup = () => {
-//     post("/api/group", {name:"Anotha One"});
-//   }
+
 
   render () {
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
+    // no user logged in
     if (!this.props.userId) {
         return (<Menu>
             <p>Sign In!</p>
         </Menu>);
     }
+    // no lists for current user
+    else if (!this.state.groups.length === 0) {
+      return (<Menu>
+        <p>Start a List!</p>
+        <p>Or join one</p>
+    </Menu>);
+    }
     const userGroups = this.state.groups.map(group => {
-        return <a href={`/${group._id}`} key={`group-${group.id}`}>{group.groupName}</a>
+        return <a href={`/feed/${group._id}`} key={`group-${group._id}`}>{group.groupName}</a>
     });
     return (
       <Menu>
         {userGroups}
-        <button onClick={this.getGroups}>{this.props.word}</button>
       </Menu>
     );
   }

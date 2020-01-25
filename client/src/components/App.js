@@ -3,7 +3,8 @@ import { Router, Redirect } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Feed from "./pages/Feed.js";
 import Start from "./pages/Start.js";
-import Navbar from "./modules/Navbar.js";
+import Join from "./pages/Join.js";
+import Create from "./pages/Create.js";
 
 import "../utilities.css";
 
@@ -48,18 +49,14 @@ class App extends Component {
 
 
   render() {
+    // TODO: empty feed
     return (
       <>
-      <Navbar
-          handleLogin={this.handleLogin}
-          handleLogout={this.handleLogout}
-          userId={this.state.userId}
-        />
         <Router>
-          {/* <Start path="/" handleLogin={this.handleLogin} userId={this.state.userId} /> */}
-          {/* <Feed path="/" userId={this.state.userId} handleLogout={this.handleLogout} /> */}
-          {/* <Feed path="/" userId={this.state.userId} /> */}
-          <Feed path="/:groupId" userId={this.state.userId} />
+          <Start path="/" handleLogin={this.handleLogin} userId={this.state.userId} />
+          <Feed path="feed/:groupId" userId={this.state.userId} handleLogin={this.handleLogin} handleLogout={this.handleLogout} />
+          <Join path="/join" userId={this.state.userId} handleLogin={this.handleLogin}/>
+          <Create path="/create" userId={this.state.userId} handleLogin={this.handleLogin}/>
           <NotFound default />
         </Router>
       </>

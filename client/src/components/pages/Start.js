@@ -1,11 +1,19 @@
 import React, { Component } from "react";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
+import GoogleLogin, {  } from "react-google-login";
+import { navigate } from "@reach/router";
 
 import "../../utilities.css";
 import "./Start.css";
 
 require("dotenv").config();
 
+/**
+ * Home page that user is prompted on first time entering page
+ *
+ * Proptypes
+ * @param {string} userId of current user
+ * @param {function} handleLogin handles login functionality and changing state
+ */
 class Start extends Component {
   constructor(props) {
     super(props);
@@ -13,11 +21,10 @@ class Start extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    // remember -- api calls go here!
-  }
-
   render() {
+    if (this.props.userId) {
+      navigate("/feed/landing");
+    }
     return (
       <div>
         <h1>listy</h1>
@@ -33,10 +40,3 @@ class Start extends Component {
 }
 
 export default Start;
-
-// <GoogleLogout
-//             clientId={GOOGLE_CLIENT_ID}
-//             buttonText="Logout"
-//             onLogoutSuccess={this.props.handleLogout}
-//             onFailure={(err) => console.log(err)}
-//           />

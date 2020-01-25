@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const GroupSchema = new mongoose.Schema({
   groupName: String,
-  activiationCode: String,
+  activationCode: String,
   creatorId: String,
   items: Number,
   timestamp: { type: Date, default: Date.now }, 

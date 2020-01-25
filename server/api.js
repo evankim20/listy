@@ -96,38 +96,46 @@ router.post("/removedislike", (req, res) => {
 });
 
 // create a new group
-router.post("/group", (req, res) => {
+router.post("/create", (req, res) => {
   const newGroup = new Group({
     groupName: req.body.name,
-    activiationCode: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+    activationCode: Math.random().toString(36).replace(/[^a-z]+/g, ''),
     creatorId: req.user._id,
     items: 0,
     users: [req.user._id],
   });
-  newGroup.save().then(group => {
-    User.findOne({ _id: req.user._id }).then((user) => {
-      user.groups = user.groups.concat([group._id]);
-      user.save();
-    });
-    res.send(group);
-  });
+  newGroup.save().then((group) => res.send(group));
 });
 
-// TODO: test these
 // get group information
 router.get("/group", (req, res) => {
+  console.log("group api call " + req.query.groupId);
   Group.findOne({ _id: req.query.groupId }).then((group) => {
+    console.log(group);
     res.send(group);
   });
 })
 
+// TODO: test if this works and updates both arrays
+// TODO: also check if sidebar updates !!!
+// join a group (adds user to Group.user Array and adds group to User.groups array)
+router.post("/join", (req, res) => {
+  Group.findOne({ activationCode: req.body.activationCode }).then((group) => {
+    if (!group.users.includes(req.user._id)) {
+      group.users = group.users.concat([req.user._id]);
+      group.save()
+    } 
+    res.send(group);
+  })
+  
+
+})
 // get all groups user is in
 router.get("/user/groups", (req, res) => {
   Group.find({ users: req.user._id}).then((groups) => {
     res.send(groups);
   })
 })
-
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
