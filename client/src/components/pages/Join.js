@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { get, post } from "../../utilities.js";
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = "453842707124-jj6ct0qccpkmsaaflda1e9ba2233ocnm.apps.googleusercontent.com";
 
 
 /**

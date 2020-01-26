@@ -4,7 +4,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import githubLogo from "../photos/github.png";
 
 import "./Navbar.css";
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = "453842707124-jj6ct0qccpkmsaaflda1e9ba2233ocnm.apps.googleusercontent.com";
 
 /**
  * The navigation bar at the top of all pages.

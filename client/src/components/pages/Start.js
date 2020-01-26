@@ -6,7 +6,7 @@ import { navigate } from "@reach/router";
 import "../../utilities.css";
 import "./Start.css";
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = "453842707124-jj6ct0qccpkmsaaflda1e9ba2233ocnm.apps.googleusercontent.com";
 
 /**
  * Home page that user is prompted on first time entering page
