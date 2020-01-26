@@ -7,6 +7,7 @@ import GoogleLogin from "react-google-login";
 import "./Feed.css";
 import { get, post } from "../../utilities.js";
 
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 class Feed extends Component {
   constructor(props) {

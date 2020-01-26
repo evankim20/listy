@@ -7,6 +7,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import "./Create.css";
 import { post } from "../../utilities.js";
 
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 
 /**

@@ -29,9 +29,16 @@
 }
 
 .nav-link + .nav-link {
-    margin-right: var(--l);
+    margin-right: var(--s);
 }
 
 .nav-link:hover {
     opacity: 0.8;
+}
+
+.github-link {
+    height: 35px;
+    color: white;
+    margin-right: var(--l);
+    vertical-align: middle;
 }

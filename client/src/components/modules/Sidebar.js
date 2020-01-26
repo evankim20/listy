@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { slide as Menu } from 'react-burger-menu'
-import { Link } from "@reach/router";
-import Radium from 'radium';
-
-import { post, get } from "../../utilities.js";
-
-let RadiumLink = Radium(Link);
+import { get } from "../../utilities.js";
 
 import "./Sidebar.css";
 
@@ -53,21 +48,27 @@ class Sidebar extends Component {
     // no user logged in
     if (!this.props.userId) {
         return (<Menu>
-            <p>Sign In!</p>
+          <div className="side-bar-container">
+            <div className="bm-item-alert">Login to get started</div> 
+          </div>
         </Menu>);
     }
     // no lists for current user
-    else if (!this.state.groups.length === 0) {
+    else if (this.state.groups.length === 0) {
       return (<Menu>
-        <p>Start a List!</p>
-        <p>Or join one</p>
+        <div className="bm-item-alert">You currently have no lists</div>
+        <div className="bm-item-alert">Start a List!</div>
+        <div className="bm-item-alert">Or join one</div>
+        <br />
+        <div className="bm-item-alert">To create or join a group select the button on the navbar</div>
     </Menu>);
     }
     const userGroups = this.state.groups.map(group => {
-        return <a href={`/feed/${group._id}`} key={`group-${group._id}`}>{group.groupName}</a>
+        return <a href={`/feed/${group._id}`} key={`group-${group._id}`} className="group-container">{group.groupName}</a>
     });
     return (
       <Menu>
+        <p id="sidebar-title">Your groups</p>
         {userGroups}
       </Menu>
     );

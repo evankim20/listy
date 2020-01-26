@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
+import githubLogo from "../photos/github.png";
 
 import "./Navbar.css";
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 /**
  * The navigation bar at the top of all pages.
@@ -30,6 +32,7 @@ class Navbar extends Component {
           <Link to="/join" className="nav-link u-headerFont">
             Join
           </Link>
+          <a href="https://github.com/evankim20/listy" className="nav-link"><img src={githubLogo} alt="Github logo" className="github-link"></img></a>
           {this.props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
