@@ -2,6 +2,8 @@
 
 listy is a collaborative list web application where users can submit and vote on items in shared lists.  
 
+https://listy-go.herokuapp.com
+
 ![Demo Animation](demo/listy_demo.gif)
 
 ## Features
